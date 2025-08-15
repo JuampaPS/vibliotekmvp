@@ -13,14 +13,14 @@ function getBaseUrl() {
 export const trpc = createTRPCNext<AppRouter>({
   config() {
     return {
-      transformer: superjson, // Required for tRPC v11 compatibility
       links: [
         httpBatchLink({
           url: `${getBaseUrl()}/api/trpc`,
-          transformer: superjson, // Also required in the link
+          transformer: superjson, // Required in tRPC v11 - ONLY here
         }),
       ],
     };
   },
+  transformer: superjson, // Also required at the top level in tRPC v11
   ssr: false, // Set to true if you want to use server-side rendering
 });
