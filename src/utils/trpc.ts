@@ -9,6 +9,7 @@ function getBaseUrl() {
   return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
 }
 
+// tRPC v11 configuration with proper transformer setup
 export const trpc = createTRPCNext<AppRouter>({
   config() {
     return {
