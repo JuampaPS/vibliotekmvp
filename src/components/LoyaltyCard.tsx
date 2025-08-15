@@ -66,7 +66,7 @@ const LoyaltyCard = () => {
       {/* Welcome Message */}
       <div className="text-center mb-6">
         <h3 className="text-xl font-semibold text-black">
-          Welcome, {loyalty.userName || 'Member'}
+          Welcome, {loyalty.email || 'Member'}
         </h3>
       </div>
 
