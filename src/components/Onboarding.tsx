@@ -68,10 +68,10 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-center mb-20"
+          className="text-center mb-12"
         >
           {/* Logo principal con diseño oficial */}
-          <div className="relative mb-8">
+          <div className="relative mb-6">
             <VibliotekLogo size="sm" color="white" className="scale-75" />
           </div>
         </motion.div>
@@ -81,7 +81,7 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-center max-w-sm mb-10"
+          className="text-center max-w-sm mb-8"
         >
           <h2 className="text-xl font-medium text-white mb-4 opacity-95">
             Sign Up Now
@@ -117,7 +117,7 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-12"
+          className="mt-8"
         >
           <div className="flex justify-center space-x-2">
             <div className="w-2 h-2 bg-white rounded-full opacity-100"></div>

@@ -5,7 +5,7 @@ import { Clock, Coffee, Leaf, Circle } from 'lucide-react';
 import Image from 'next/image';
 import WeeklyMenu from './WeeklyMenu';
 
-const DailyMenu = ({ activeTab, onShowBooking }: { activeTab: string; onShowBooking: () => void }) => {
+const DailyMenu = ({ activeTab }: { activeTab: string }) => {
   const [showWeeklyMenu, setShowWeeklyMenu] = useState(false);
   const { data: menu, isLoading, error } = trpc.menu.getDailyMenu.useQuery();
 
