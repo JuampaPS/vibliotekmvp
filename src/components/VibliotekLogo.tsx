@@ -2,14 +2,15 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 interface VibliotekLogoProps {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  size?: 'mobile' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   color?: 'white' | 'black';
   className?: string;
 }
 
 const VibliotekLogo = ({ size = 'md', color = 'black', className = '' }: VibliotekLogoProps) => {
   const sizeClasses = {
-    xs: { width: 120, height: 48 },
+    mobile: { width: 100, height: 40 },
+    xs: { width: 80, height: 32 },
     sm: { width: 300, height: 120 },
     md: { width: 450, height: 180 },
     lg: { width: 800, height: 320 },

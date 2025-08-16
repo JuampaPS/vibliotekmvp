@@ -1,49 +1,54 @@
 import { motion } from 'framer-motion';
-import { trpc } from '../utils/trpc';
-import { Crown, Star, Gift, TrendingUp, Info } from 'lucide-react';
+import { Gift, Star, Trophy } from 'lucide-react';
+import { useState } from 'react';
 
-const LoyaltyCard = () => {
-  const { data: loyalty, isLoading, error } = trpc.loyalty.getUserLoyalty.useQuery();
-  const addStampMutation = trpc.loyalty.addStamp.useMutation();
+interface LoyaltyCardProps {}
 
-  if (isLoading) {
-    return (
-      <div className="w-full max-w-md mx-auto p-6">
-        <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-gray-200 rounded"></div>
-          <div className="h-32 bg-gray-200 rounded"></div>
-          <div className="h-40 bg-gray-200 rounded"></div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="w-full max-w-md mx-auto p-6 text-center">
-        <p className="text-gray-500">Could not load loyalty data</p>
-      </div>
-    );
-  }
-
-  if (!loyalty) return null;
-
-  // Mock membership level data - will be replaced with real data later
-  const membershipLevel = {
-    current: 'SILVER',
-    next: 'GOLD',
-    currentPoints: 2058,
-    nextLevelPoints: 4499,
-    progress: (2058 / 4499) * 100,
-    benefits: [
-      '10% wallet savings',
-      'Free Zinfandel "The Clown" on your next purchase',
-      'Exclusive offers'
-    ]
+const LoyaltyCard = ({}: LoyaltyCardProps) => {
+  const [stamps, setStamps] = useState(3); // Mock data: 3 stamps earned
+  const [isRedeemed, setIsRedeemed] = useState(false);
+  
+  // Mock user data
+  const user = {
+    name: "Juampa",
+    level: stamps >= 20 ? "Guld" : stamps >= 10 ? "Silver" : "Brons",
+    totalLunches: 23,
+    checkInDates: ['2025-08-12', '2025-08-13', '2025-08-15']
   };
 
+  const maxStamps = 10;
+  const progress = (stamps / maxStamps) * 100;
+  const canRedeem = stamps >= maxStamps && !isRedeemed;
+
   const handleAddStamp = () => {
-    addStampMutation.mutate({ email: 'user@example.com' });
+    if (stamps < maxStamps) {
+      setStamps(prev => prev + 1);
+    }
+  };
+
+  const handleRedeem = () => {
+    if (canRedeem) {
+      setIsRedeemed(true);
+      setStamps(0); // Reset stamps after redemption
+    }
+  };
+
+  const getLevelColor = (level: string) => {
+    switch (level) {
+      case 'Brons': return 'from-amber-600 to-amber-800';
+      case 'Silver': return 'from-gray-400 to-gray-600';
+      case 'Guld': return 'from-yellow-400 to-yellow-600';
+      default: return 'from-amber-600 to-amber-800';
+    }
+  };
+
+  const getLevelIcon = (level: string) => {
+    switch (level) {
+      case 'Brons': return '🥉';
+      case 'Silver': return '🥈';
+      case 'Guld': return '🥇';
+      default: return '🥉';
+    }
   };
 
   return (
@@ -55,202 +60,176 @@ const LoyaltyCard = () => {
     >
       {/* Header */}
       <div className="text-center mb-6">
-        <h2 className="text-3xl font-display font-semibold text-black mb-2">
-          Loyalty Card
-        </h2>
-        <p className="text-gray-600 text-sm leading-relaxed">
-          Collect stamps and get free products
-        </p>
+        <h1 className="text-3xl font-display font-bold text-black mb-2">Stämpelkort</h1>
+        <p className="text-gray-600">Samla lunchstämplar och få en gratis lunch!</p>
       </div>
 
-      {/* Welcome Message */}
-      <div className="text-center mb-6">
-        <h3 className="text-xl font-semibold text-black">
-          Welcome, {loyalty.email || 'Member'}
-        </h3>
-      </div>
-
-      {/* Membership Level Card */}
+      {/* User Status Block */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="bg-white border-2 border-black rounded-lg p-6 mb-6"
+        className={`bg-gradient-to-r ${getLevelColor(user.level)} rounded-2xl p-6 text-white mb-6 shadow-lg`}
       >
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center space-x-2">
-            <Crown className="w-6 h-6 text-yellow-600" />
-            <span className="text-2xl font-bold text-black">{membershipLevel.current}</span>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center space-x-3">
+            <span className="text-3xl">{getLevelIcon(user.level)}</span>
+            <div>
+              <h2 className="text-xl font-bold">Hej, {user.name}!</h2>
+              <p className="text-sm opacity-90">Nivå: {user.level}</p>
+            </div>
           </div>
-          <div className="relative">
-            <Info className="w-5 h-5 text-gray-400 cursor-pointer" />
-          </div>
+          <Trophy className="w-8 h-8 text-yellow-300" />
         </div>
 
         {/* Progress Bar */}
         <div className="mb-4">
-          <div className="w-full bg-gray-200 rounded-full h-3">
+          <div className="flex justify-between text-sm mb-2">
+            <span>{stamps} av {maxStamps} luncher</span>
+            <span>{Math.round(progress)}%</span>
+          </div>
+          <div className="w-full bg-white bg-opacity-20 rounded-full h-3">
             <motion.div
               initial={{ width: 0 }}
-              animate={{ width: `${membershipLevel.progress}%` }}
-              transition={{ duration: 1, delay: 0.3 }}
-              className="bg-red-600 h-3 rounded-full"
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 1, delay: 0.5 }}
+              className="bg-yellow-300 h-3 rounded-full"
             />
-          </div>
-          <div className="flex justify-between text-sm text-gray-600 mt-2">
-            <span>{membershipLevel.currentPoints} points</span>
-            <span>{membershipLevel.nextLevelPoints} points</span>
           </div>
         </div>
 
-        {/* Benefits */}
-        <div className="text-sm text-gray-700 leading-relaxed">
-          As a {membershipLevel.current.toLowerCase()} member you get {membershipLevel.benefits.join(', ')}. 
-          Earn {membershipLevel.nextLevelPoints - membershipLevel.currentPoints} points to become a {membershipLevel.next} member.
+        {/* Total Stats */}
+        <div className="text-center text-sm opacity-90">
+          <p>Totalt ätit: {user.totalLunches} luncher</p>
         </div>
       </motion.div>
 
-      {/* Stamp Card Section */}
+      {/* Visual Stamp Card */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="bg-white border-2 border-black rounded-lg p-6 mb-6"
+        className="bg-white border-2 border-black rounded-2xl p-6 mb-6 shadow-lg"
       >
-        <h3 className="text-xl font-semibold text-black mb-4 text-center">
-          My Loyalty Cards
-        </h3>
-
+        <h3 className="text-xl font-bold text-black mb-4 text-center">Ditt Stämpelkort</h3>
+        
         {/* Stamp Grid */}
-        <div className="grid grid-cols-5 gap-3 mb-6">
-          {Array.from({ length: 9 }, (_, i) => (
-            <motion.div
-              key={i}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.3, delay: 0.3 + i * 0.1 }}
-              className={`
-                w-12 h-12 rounded-full border-2 border-black flex items-center justify-center text-sm font-bold cursor-pointer transition-all duration-300
-                ${i < loyalty.stamps 
-                  ? 'bg-red-600 text-white border-red-600 animate-stamp' 
-                  : 'bg-white text-black hover:bg-gray-50'
-                }
-              `}
-              onClick={() => i === loyalty.stamps && handleAddStamp()}
-            >
-              {i + 1}
-            </motion.div>
-          ))}
-          
-          {/* Reward Circle */}
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.3, delay: 0.6 }}
-            className="w-12 h-12 rounded-full border-2 border-black bg-black flex items-center justify-center"
-          >
-            <Gift className="w-6 h-6 text-white" />
-          </motion.div>
+        <div className="grid grid-cols-5 gap-4 mb-6">
+          {Array.from({ length: maxStamps }, (_, index) => {
+            const stampNumber = index + 1;
+            const isCompleted = stampNumber <= stamps;
+            const isLastStamp = stampNumber === maxStamps;
+            
+            return (
+              <motion.div
+                key={stampNumber}
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
+                className={`
+                  w-16 h-16 rounded-full border-2 flex items-center justify-center text-lg font-bold transition-all duration-300 cursor-pointer
+                  ${isCompleted 
+                    ? 'bg-red-600 text-white border-red-600 shadow-lg' 
+                    : 'bg-white text-gray-400 border-gray-300 hover:border-red-300'
+                  }
+                  ${isLastStamp && isCompleted ? 'ring-4 ring-yellow-300' : ''}
+                `}
+                onClick={handleAddStamp}
+              >
+                {isLastStamp && isCompleted ? (
+                  <Gift className="w-8 h-8 text-yellow-300" />
+                ) : (
+                  stampNumber
+                )}
+              </motion.div>
+            );
+          })}
         </div>
 
-        {/* Stamp Card Info */}
-        <div className="text-center">
-          <h4 className="text-lg font-semibold text-black mb-2">TODAY'S LUNCH</h4>
-          <p className="text-sm text-gray-600 mb-4">
-            Buy any lunch and get a stamp. Collect 7 stamps and get 1 lunch for free.
+        {/* Description */}
+        <div className="text-center mb-4">
+          <p className="text-gray-700 leading-relaxed">
+            Ät 10 luncher och få en valfri Lunch utan kostnad.
           </p>
-          <div className="grid grid-cols-7 gap-2 mb-4">
-            {Array.from({ length: 7 }, (_, index) => (
-              <div
-                key={index}
-                className={`w-8 h-8 rounded-full border-2 flex items-center justify-center ${
-                  index < loyalty.stamps
-                    ? 'bg-red-600 border-red-600 text-white'
-                    : 'border-gray-300 bg-white'
-                }`}
-              >
-                {index < loyalty.stamps ? (
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    className="text-xs font-bold"
-                  >
-                    ✓
-                  </motion.div>
-                ) : (
-                  <span className="text-xs text-gray-400">{index + 1}</span>
-                )}
-              </div>
-            ))}
-          </div>
-          <button
-            onClick={handleAddStamp}
-            disabled={loyalty.stamps >= 7}
-            className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${
-              loyalty.stamps >= 7
-                ? 'bg-green-600 text-white cursor-not-allowed'
-                : 'bg-red-600 text-white hover:bg-red-700'
-            }`}
-          >
-            <span>{loyalty.stamps >= 7 ? 'Reward Unlocked!' : 'Add Stamp'}</span>
-          </button>
         </div>
+
+        {/* Redeem Button */}
+        {canRedeem && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+            onClick={handleRedeem}
+            className="w-full py-4 bg-green-600 text-white rounded-xl font-bold text-lg hover:bg-green-700 transition-colors flex items-center justify-center space-x-2"
+          >
+            <Gift className="w-6 h-6" />
+            <span>Lös in Gratis Lunch!</span>
+          </motion.button>
+        )}
+
+        {/* Add Stamp Button */}
+        {!canRedeem && stamps < maxStamps && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+            onClick={handleAddStamp}
+            className="w-full py-3 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors flex items-center justify-center space-x-2"
+          >
+            <Star className="w-5 h-5" />
+            <span>Lägg till Stämpel</span>
+          </motion.button>
+        )}
+
+        {/* Reset Button */}
+        {isRedeemed && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+            onClick={() => {
+              setIsRedeemed(false);
+              setStamps(0);
+            }}
+            className="w-full py-3 bg-gray-600 text-white rounded-xl font-medium hover:bg-gray-700 transition-colors"
+          >
+            Starta om Stämpelkort
+          </motion.button>
+        )}
       </motion.div>
 
-      {/* Special Benefits */}
+      {/* Check-in History */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className="bg-white border-2 border-black rounded-lg p-6 mb-6"
+        className="bg-white border-2 border-black rounded-2xl p-6 mb-6"
       >
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-black">Your Special Benefits</h3>
-          <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
-            <span className="text-white text-xs font-bold">3</span>
-          </div>
-        </div>
-
-        {/* Benefits List */}
-        <div className="space-y-3">
-          {[
-            'Free coffee on your birthday',
-            'Exclusive wine tastings',
-            'Preview of new dishes'
-          ].map((benefit, index) => (
+        <h3 className="text-lg font-bold text-black mb-4 flex items-center">
+          <Star className="w-5 h-5 mr-2 text-red-600" />
+          Senaste Incheckningar
+        </h3>
+        
+        <div className="space-y-2">
+          {user.checkInDates.map((date, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.4 + index * 0.1 }}
-              className="flex items-center space-x-3"
+              className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
             >
-              <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-              <span className="text-sm text-gray-700">{benefit}</span>
+              <span className="font-medium text-black">Lunch #{index + 1}</span>
+              <span className="text-sm text-gray-600">{date}</span>
             </motion.div>
           ))}
         </div>
-
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="w-full mt-4 py-2 px-4 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition-colors"
-        >
-          See Your Special Benefits
-        </motion.button>
       </motion.div>
 
       {/* Bottom Info */}
-      <div className="mt-8 text-center">
-        <div className="flex items-center justify-center space-x-2 mb-4">
-          <div className="circle-accent"></div>
-          <div className="circle-accent"></div>
-          <div className="circle-accent"></div>
-        </div>
-        <p className="text-sm text-gray-600">
-          Collect stamps every time you visit Vibliotek
-        </p>
+      <div className="text-center text-sm text-gray-500">
+        <p>Ett stämpel per dag - samla 10 för en gratis lunch!</p>
+        <p>Stämpelkortet återställs efter inlösen</p>
       </div>
     </motion.div>
   );

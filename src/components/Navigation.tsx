@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Home, QrCode, Gift, Gamepad2, Wallet } from 'lucide-react';
+import { Home, Star, Calendar } from 'lucide-react';
 
 interface NavigationProps {
   activeTab: string;
@@ -8,11 +8,10 @@ interface NavigationProps {
 
 const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
   const tabs = [
-    { id: 'home', label: 'Home', icon: Home },
-    { id: 'scan', label: 'Scan', icon: QrCode },
-    { id: 'rewards', label: 'Rewards', icon: Gift },
-    { id: 'games', label: 'Games', icon: Gamepad2 },
-    { id: 'wallet', label: 'Wallet', icon: Wallet },
+    { id: 'home', label: 'Hem', icon: Home },
+    { id: 'loyalty', label: 'Stämpel', icon: Star },
+    { id: 'booking', label: 'Boka Bord', icon: Calendar },
+    { id: 'weekly', label: 'Veckan', icon: Calendar },
   ];
 
   return (

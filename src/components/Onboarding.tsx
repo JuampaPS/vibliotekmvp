@@ -20,7 +20,7 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
     },
     {
       title: 'Collect Stamps',
-      subtitle: 'Get a stamp every time you buy lunch. Collect 7 stamps and get 1 lunch for free.',
+      subtitle: 'Get a stamp every time you buy lunch. Collect 10 stamps and get 1 lunch free.',
       icon: Star,
       color: 'bg-black'
     },
@@ -70,16 +70,10 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-center mb-20"
         >
-          {/* Línea superior */}
-          <div className="w-48 h-1 bg-white mx-auto mb-8"></div>
-          
           {/* Logo principal con diseño oficial */}
           <div className="relative mb-8">
-            <VibliotekLogo size="sm" color="white" />
+            <VibliotekLogo size="sm" color="white" className="scale-75" />
           </div>
-          
-          {/* Línea inferior */}
-          <div className="w-48 h-1 bg-white mx-auto mt-8"></div>
         </motion.div>
 
         {/* Texto principal */}

@@ -9,18 +9,17 @@ function getBaseUrl() {
   return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
 }
 
-// tRPC v11 configuration with proper transformer setup
 export const trpc = createTRPCNext<AppRouter>({
   config() {
     return {
       links: [
         httpBatchLink({
           url: `${getBaseUrl()}/api/trpc`,
-          transformer: superjson, // Required in tRPC v11 - ONLY here
+          transformer: superjson,
         }),
       ],
     };
   },
-  transformer: superjson, // Also required at the top level in tRPC v11
-  ssr: false, // Set to true if you want to use server-side rendering
+  ssr: false,
+  transformer: superjson,
 });

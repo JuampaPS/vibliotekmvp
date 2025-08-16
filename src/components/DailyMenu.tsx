@@ -1,13 +1,20 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { trpc } from '../utils/trpc';
-import { Clock, Coffee, Leaf, Circle, Star, Wine, ArrowRight } from 'lucide-react';
+import { Clock, Coffee, Leaf, Circle } from 'lucide-react';
 import Image from 'next/image';
 import WeeklyMenu from './WeeklyMenu';
 
-const DailyMenu = () => {
+const DailyMenu = ({ activeTab, onShowBooking }: { activeTab: string; onShowBooking: () => void }) => {
   const [showWeeklyMenu, setShowWeeklyMenu] = useState(false);
   const { data: menu, isLoading, error } = trpc.menu.getDailyMenu.useQuery();
+
+  // Hide weekly menu when navigating to home
+  useEffect(() => {
+    if (activeTab === 'home') {
+      setShowWeeklyMenu(false);
+    }
+  }, [activeTab]);
 
   // Weekly menu data with images
   const weeklyMenuData = {
@@ -38,6 +45,30 @@ const DailyMenu = () => {
     }
   };
 
+  // Always at Vibliotek menu items
+  const alwaysAtVibliotek = [
+    {
+      name: "PEPITO DE TERNERA - En klassisk biffmacka med Pedro Ximenez karamelliserad lök, piquillopeppar och rucola. Serverad med padrones och patatas bravas",
+      price: 149,
+      image: "/images/pepitoternera.webp"
+    },
+    {
+      name: "BOCATA DE CALAMARES - Blackfiskmacka med aioli, picklad selleri och rucola. Serverad med padrones och patatas bravas",
+      price: 149,
+      image: "/images/bocatacalamares.jpg"
+    },
+    {
+      name: "BOCATA DE TORTILLA - Spansk omelettsmörgås med aioli, piquillopeppar och rucola. Serverad med padrones och patatas bravas",
+      price: 149,
+      image: "/images/bocatatortilla.JPG"
+    },
+    {
+      name: "BOCATA DE CERDO Y JAMÓN IBÉRICO - Pulled pork och iberisk skinksmörgås med örter & vitlök färskost, picklad silverlök och rucola. Serverad med padrones och patatas bravas",
+      price: 149,
+      image: "/images/bocatajamon.webp"
+    }
+  ];
+
   // Get current day menu
   const getCurrentDayMenu = () => {
     const today = new Date();
@@ -54,15 +85,21 @@ const DailyMenu = () => {
         return weeklyMenuData.thursday;
       case 5: // Friday
         return weeklyMenuData.friday;
+      case 0: // Sunday
+      case 6: // Saturday
+        // Rotate through always available items based on date
+        const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+        const rotationIndex = dayOfYear % alwaysAtVibliotek.length;
+        return alwaysAtVibliotek[rotationIndex];
       default:
-        return weeklyMenuData.monday; // Default to Monday for weekends
+        return weeklyMenuData.monday; // Fallback
     }
   };
 
   const currentDayMenu = getCurrentDayMenu();
 
   if (showWeeklyMenu) {
-    return <WeeklyMenu onBack={() => setShowWeeklyMenu(false)} />;
+    return <WeeklyMenu onBack={() => setShowWeeklyMenu(false)} showBackButton={true} />;
   }
 
   if (isLoading) {
@@ -100,11 +137,16 @@ const DailyMenu = () => {
     >
       {/* Hero Section with Menu of the Day */}
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-display font-bold text-black mb-4">
-          Today's Lunch
+        <h1 className={`text-4xl font-display font-bold mb-2 ${
+          [0, 6].includes(new Date().getDay()) ? "text-red-600" : "text-black"
+        }`}>
+          {[0, 6].includes(new Date().getDay()) ? "À La Carte" : "Today's Lunch"}
         </h1>
-        <p className="text-gray-600 text-lg mb-6">
-          Discover today's exclusive dish at Vibliotek
+        <p className="text-gray-600 text-sm mb-4">
+          {[0, 6].includes(new Date().getDay())
+            ? "We've carefully chosen the finest ingredients to create our delicious tapas, blending traditional Spanish flavors with a modern twist. Inspired by the vibrant cuisine of Spain and the Mediterranean, each dish is crafted to bring a fresh, contemporary take on classic tastes. Expect a mix of bold spices, fresh herbs, and high-quality ingredients that come together to offer you a unique culinary experience. Our tapas are designed to delight your senses and transport you to the sunny coasts of the Mediterranean, all while enjoying a modern, stylish presentation!" 
+            : "Discover today's exclusive dish at Vibliotek"
+          }
         </p>
       </div>
 
@@ -115,59 +157,86 @@ const DailyMenu = () => {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="bg-white border-2 border-black rounded-lg p-6 shadow-lg mb-8"
       >
-        {/* Date */}
-        <div className="flex items-center justify-center mb-4">
-          <Clock className="w-4 h-4 mr-2 text-gray-600" />
-          <span className="text-sm text-gray-600 font-medium">
-            {menuDate.toLocaleDateString('en-US', { 
-              weekday: 'long', 
-              year: 'numeric', 
-              month: 'long', 
-              day: 'numeric' 
-            })}
-          </span>
-        </div>
+        {[0, 6].includes(new Date().getDay()) ? (
+          // Weekend: Tapas content
+          <>
+            {/* Tapas title */}
+            <h2 className="text-2xl font-bold text-black text-center mb-4">
+              Delicious Tapas
+            </h2>
 
-        {/* Dish name */}
-        <h2 className="text-lg font-semibold text-black text-center mb-3 leading-tight">
-          {currentDayMenu.name}
-        </h2>
+            {/* Tapas image */}
+            <div className="mb-4">
+              <Image
+                src="/images/Tapas.webp"
+                alt="Delicious Tapas Selection"
+                width={400}
+                height={300}
+                className="w-full h-48 object-contain rounded-lg border border-gray-200 bg-gray-50"
+                priority
+              />
+            </div>
 
-        {/* Menu image */}
-        <div className="mb-4">
-          <Image
-            src={currentDayMenu.image}
-            alt={`Today's menu: ${currentDayMenu.name}`}
-            width={400}
-            height={300}
-            className="w-full h-48 object-cover rounded-lg border border-gray-200"
-            priority
-          />
-        </div>
 
-        {/* Includes section with price */}
-        <div className="border-t border-gray-200 pt-4">
-          <h3 className="text-sm font-semibold text-gray-800 mb-3 text-center">
-            Includes:
-          </h3>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center justify-center space-x-6">
-              <div className="flex flex-col items-center">
-                <Leaf className="w-6 h-6 text-green-600 mb-1" />
-                <span className="text-xs text-gray-600">Salad</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <Circle className="w-6 h-6 text-amber-600 mb-1" />
-                <span className="text-xs text-gray-600">Bread</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <Coffee className="w-6 h-6 text-brown-600 mb-1" />
-                <span className="text-xs text-gray-600">Coffee</span>
+          </>
+        ) : (
+          // Weekday: Regular lunch content
+          <>
+            {/* Date */}
+            <div className="flex items-center justify-center mb-4">
+              <Clock className="w-4 h-4 mr-2 text-gray-600" />
+              <span className="text-sm text-gray-600 font-medium">
+                {menuDate.toLocaleDateString('en-US', { 
+                  weekday: 'long', 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric' 
+                })}
+              </span>
+            </div>
+
+            {/* Dish name */}
+            <h2 className="text-lg font-semibold text-black text-center mb-3 leading-tight">
+              {currentDayMenu.name}
+            </h2>
+
+            {/* Menu image */}
+            <div className="mb-4">
+              <Image
+                src={currentDayMenu.image}
+                alt={`Today's menu: ${currentDayMenu.name}`}
+                width={400}
+                height={300}
+                className="w-full h-48 object-contain rounded-lg border border-gray-200 bg-gray-50"
+                priority
+              />
+            </div>
+
+            {/* Includes section with price */}
+            <div className="border-t border-gray-200 pt-4">
+              <h3 className="text-sm font-semibold text-gray-800 mb-3 text-center">
+                Includes:
+              </h3>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center justify-center space-x-6">
+                  <div className="flex flex-col items-center">
+                    <Leaf className="w-6 h-6 text-green-600 mb-1" />
+                    <span className="text-xs text-gray-600">Salad</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <Circle className="w-6 h-6 text-amber-600 mb-1" />
+                    <span className="text-xs text-gray-600">Bread</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <Coffee className="w-6 h-6 text-brown-600 mb-1" />
+                    <span className="text-xs text-gray-600">Coffee</span>
+                  </div>
+                </div>
+                <span className="text-4xl font-bold text-black">{currentDayMenu.price} kr</span>
               </div>
             </div>
-            <span className="text-4xl font-bold text-black">{currentDayMenu.price} kr</span>
-          </div>
-        </div>
+          </>
+        )}
 
         {/* Allergens */}
         {/* Allergens are not available in the new structure, so we'll keep it empty or remove it if not needed */}
@@ -178,77 +247,25 @@ const DailyMenu = () => {
           </div> */}
       </motion.div>
         
-      {/* CTA Buttons - Moved down after the menu card */}
-      <div className="flex flex-col space-y-3 mb-8">
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={() => setShowWeeklyMenu(true)}
-          className="w-full py-4 px-6 bg-red-600 text-white rounded-lg font-semibold text-lg hover:bg-red-700 transition-colors flex items-center justify-center space-x-2"
-        >
-          <Star className="w-5 h-5" />
-          <span>Check Weekly Menu</span>
-        </motion.button>
-        
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="w-full py-3 px-6 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition-colors flex items-center justify-center space-x-2"
-        >
-          <Star className="w-4 h-4" />
-          <span>Earn Points</span>
-          <ArrowRight className="w-4 h-4" />
-        </motion.button>
-        
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="w-full py-3 px-6 border-2 border-red-600 text-red-600 rounded-lg font-medium hover:bg-red-50 transition-colors flex items-center justify-center space-x-2"
-        >
-          <Wine className="w-4 h-4" />
-          <span>Join Wine Club</span>
-          <ArrowRight className="w-4 h-4" />
-        </motion.button>
-      </div>
-
-      {/* Quick Actions */}
+      {/* AW+17 Image */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
-        className="bg-white border-2 border-black rounded-lg p-6 mb-8"
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="bg-white border-2 border-black rounded-lg shadow-lg mb-8 overflow-hidden"
       >
-        <h3 className="text-lg font-semibold text-black mb-4 text-center">
-          Quick Actions
-        </h3>
-        
-        <div className="grid grid-cols-2 gap-4">
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="p-4 border-2 border-gray-200 rounded-lg hover:border-red-300 transition-colors text-center"
-          >
-            <Star className="w-8 h-8 text-yellow-500 mx-auto mb-2" />
-            <span className="text-sm font-medium text-black">Add Stamp</span>
-          </motion.button>
-          
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="p-4 border-2 border-gray-200 rounded-lg hover:border-red-300 transition-colors text-center"
-          >
-            <Wine className="w-8 h-8 text-red-500 mx-auto mb-2" />
-            <span className="text-sm font-medium text-black">Book Table</span>
-          </motion.button>
-        </div>
+        <Image
+          src="/images/AW+17.webp"
+          alt="AW+17 Special"
+          width={400}
+          height={300}
+          className="w-full object-contain"
+          priority
+        />
       </motion.div>
 
-      {/* Bottom accent circles */}
-      <div className="flex items-center justify-center space-x-2">
-        <div className="circle-accent"></div>
-        <div className="circle-accent"></div>
-        <div className="circle-accent"></div>
-      </div>
+
+
     </motion.div>
   );
 };
