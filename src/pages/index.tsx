@@ -24,6 +24,11 @@ const Home = () => {
     setShowOnboarding(true);
   }, []);
 
+  // Scroll to top when changing tabs
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [activeTab]);
+
   const handleOnboardingComplete = () => {
     localStorage.setItem('vibliotek-onboarding', 'true');
     setShowOnboarding(false);
