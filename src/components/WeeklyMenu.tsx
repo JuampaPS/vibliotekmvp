@@ -162,7 +162,7 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
         ) : (
           <div className="w-20"></div>
         )}
-        <h1 className="text-2xl font-display font-bold text-black">Weekly Menu</h1>
+
         <div className="w-20"></div>
       </div>
 
@@ -229,19 +229,7 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
             </div>
           </motion.div>
 
-          {/* Navigation Arrows */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white border-2 border-black rounded-full p-2 hover:bg-gray-50 transition-colors"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            onClick={nextSlide}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white border-2 border-black rounded-full p-2 hover:bg-gray-50 transition-colors"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
+
 
           {/* Dots Indicator */}
           <div className="flex items-center justify-center space-x-2 mt-4">
@@ -313,19 +301,7 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
             </div>
           </motion.div>
 
-          {/* Navigation Arrows */}
-          <button
-            onClick={prevAlwaysSlide}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white border-2 border-black rounded-full p-2 hover:bg-gray-50 transition-colors"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            onClick={nextAlwaysSlide}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white border-2 border-black rounded-full p-2 hover:bg-gray-50 transition-colors"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
+
 
           {/* Dots Indicator */}
           <div className="flex items-center justify-center space-x-2 mt-4">
