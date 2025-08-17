@@ -189,13 +189,13 @@ const DailyMenu = ({ activeTab }: { activeTab: string }) => {
         </h2>
 
         {/* Menu image */}
-        <div className="mb-4">
+        <div className="mb-4 -mx-6">
           <Image
             src={currentDayMenu.image}
             alt={`Today's menu: ${currentDayMenu.name}`}
             width={400}
             height={300}
-            className="w-full h-48 object-contain rounded-lg border border-gray-200 bg-gray-50"
+            className="w-screen h-48 object-cover"
             priority
           />
         </div>
@@ -238,14 +238,14 @@ const DailyMenu = ({ activeTab }: { activeTab: string }) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className="bg-white border-2 border-black rounded-lg shadow-lg mb-8 overflow-hidden"
+        className="mb-8 -mx-6 overflow-hidden"
       >
         <Image
           src="/images/AW+17.webp"
           alt="AW+17 Special"
           width={400}
           height={300}
-          className="w-full object-contain"
+          className="w-screen object-contain"
           priority
         />
       </motion.div>
