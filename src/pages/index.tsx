@@ -60,7 +60,7 @@ const Home = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-black text-white"
+        className="bg-red-600 text-white"
       >
         <div className="max-w-md mx-auto px-4 py-2">
           <div className="flex items-center justify-between">
@@ -76,9 +76,9 @@ const Home = () => {
             </div>
                                <button
                      onClick={() => setShowProfileModal(true)}
-                     className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700 transition-colors"
+                     className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors border-2 border-black"
                    >
-                     <span className="text-xs text-white">👤</span>
+                     <span className="text-xs text-black">👤</span>
                    </button>
           </div>
         </div>
