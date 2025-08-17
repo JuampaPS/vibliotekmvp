@@ -28,12 +28,12 @@ const Booking = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="max-w-md mx-auto px-4 py-6"
+      className="max-w-md mx-auto px-4 py-6 bg-black text-white"
     >
       {/* Header */}
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-display font-bold text-black mb-2">Boka Bord</h1>
-        <p className="text-gray-600">Reserve your table at Vibliotek</p>
+        <h1 className="text-3xl font-montserrat font-bold text-white mb-2">Boka Bord</h1>
+        <p className="text-white font-montserrat">Reserve your table at Vibliotek</p>
       </div>
 
       {/* Service Types */}
@@ -47,7 +47,7 @@ const Booking = () => {
             className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm"
           >
             <div className="flex items-start justify-between mb-3">
-              <h3 className="text-lg font-bold text-black">{service.title}</h3>
+              <h3 className="text-lg font-bold text-white font-montserrat">{service.title}</h3>
               <div className="text-right">
                 <p className="text-sm text-gray-600">{service.time}</p>
                 <p className="text-sm font-medium text-red-600">{service.price}</p>
@@ -68,7 +68,7 @@ const Booking = () => {
         transition={{ duration: 0.5, delay: 0.4 }}
         className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm mb-6"
       >
-        <h3 className="text-lg font-bold text-black mb-4 text-center">Contact Information</h3>
+        <h3 className="text-lg font-bold text-white mb-4 text-center font-montserrat">Contact Information</h3>
         
         <div className="space-y-3">
           <div className="flex items-center space-x-3">

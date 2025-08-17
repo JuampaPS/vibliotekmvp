@@ -83,10 +83,10 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-center max-w-sm mb-8"
         >
-          <h2 className="text-xl font-medium text-white mb-4 opacity-95">
+          <h2 className="text-xl font-medium text-white mb-4 opacity-95 font-montserrat">
             Sign Up Now
           </h2>
-          <p className="text-white text-sm leading-relaxed opacity-90 font-light">
+          <p className="text-white text-sm leading-relaxed opacity-90 font-light font-montserrat">
             Get personal benefits and offers<br />
             with the Vibliotek app.<br />
             Sign up as a member<br />

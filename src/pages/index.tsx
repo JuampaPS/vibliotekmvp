@@ -62,12 +62,12 @@ const Home = () => {
         transition={{ duration: 0.5 }}
         className="bg-black text-white"
       >
-        <div className="max-w-md mx-auto px-4 py-4">
+        <div className="max-w-md mx-auto px-4 py-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              {/* Vibliotek Logo Oficial - Properly sized for mobile */}
+              {/* Vibliotek Logo Oficial - Reduced to 50% size */}
               <div className="flex items-center">
-                <VibliotekLogo size="mobile" color="white" />
+                <VibliotekLogo size="mobileSmall" color="white" />
               </div>
               <div>
                 {/* Loyalty Club text - Well proportioned */}

@@ -145,7 +145,7 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
       transition={{ duration: 0.3 }}
-      className="w-full max-w-md mx-auto p-6"
+      className="w-full max-w-md mx-auto p-6 bg-black text-white"
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
@@ -154,10 +154,10 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={onBack}
-            className="flex items-center space-x-2 text-black hover:text-red-600 transition-colors"
+            className="flex items-center space-x-2 text-white hover:text-red-600 transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
-            <span className="font-medium">Back</span>
+            <span className="font-medium text-white">Back</span>
           </motion.button>
         ) : (
           <div className="w-20"></div>
@@ -173,10 +173,10 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
         transition={{ duration: 0.5, delay: 0.1 }}
         className="bg-white border-2 border-black rounded-lg p-6 mb-6"
       >
-        <h2 className="text-xl font-bold text-black mb-4 text-center">
+        <h2 className="text-xl font-bold text-black mb-4 text-center font-montserrat">
           DAGENS LUNCH – 135 KR
         </h2>
-        <p className="text-sm text-gray-600 text-center mb-6">
+        <p className="text-sm text-gray-600 text-center mb-6 font-montserrat">
           Sallad, bröd & kaffe ingår alltid
         </p>
 
@@ -202,24 +202,24 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
             </div>
 
             {/* Dish Image */}
-            <div className="mb-4">
+            <div className="mb-4 -mx-6">
               <Image
                 src={weeklyDishes[currentSlide].image}
                 alt={weeklyDishes[currentSlide].name}
                 width={300}
                 height={200}
-                className="w-full h-48 object-cover rounded-lg border border-gray-200"
+                className="w-screen h-64 object-cover"
                 priority
               />
             </div>
 
             {/* Dish Name */}
-            <h3 className="font-bold text-black text-lg mb-2">
+            <h3 className="font-bold text-black text-lg mb-2 font-montserrat">
               {weeklyDishes[currentSlide].name}
             </h3>
 
             {/* Dish Description */}
-            <p className="text-sm text-gray-700 leading-relaxed mb-3">
+            <p className="text-sm text-gray-700 leading-relaxed mb-3 font-montserrat">
               {weeklyDishes[currentSlide].description}
             </p>
 
@@ -253,7 +253,7 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="bg-white border-2 border-black rounded-lg p-6 mb-6"
       >
-        <h2 className="text-xl font-bold text-black mb-4 text-center">
+        <h2 className="text-xl font-bold text-black mb-4 text-center font-montserrat">
           ALWAYS AT VIBLIOTEK – 149 KR
         </h2>
 
@@ -274,24 +274,24 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
             className="text-center"
           >
             {/* Dish Image */}
-            <div className="mb-4">
+            <div className="mb-4 -mx-6">
               <Image
                 src={alwaysAvailable[currentAlwaysSlide].image}
                 alt={alwaysAvailable[currentAlwaysSlide].name}
                 width={300}
                 height={200}
-                className="w-full h-48 object-cover rounded-lg border border-gray-200"
+                className="w-screen h-64 object-cover"
                 priority
               />
             </div>
 
             {/* Dish Name */}
-            <h3 className="font-bold text-black text-lg mb-2">
+            <h3 className="font-bold text-black text-lg mb-2 font-montserrat">
               {alwaysAvailable[currentAlwaysSlide].name}
             </h3>
 
             {/* Dish Description */}
-            <p className="text-sm text-gray-700 leading-relaxed mb-3">
+            <p className="text-sm text-gray-700 leading-relaxed mb-3 font-montserrat">
               {alwaysAvailable[currentAlwaysSlide].description}
             </p>
 

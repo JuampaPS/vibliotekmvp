@@ -71,7 +71,8 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui'],
-        display: ['Playfair Display', 'ui-serif', 'Georgia'],
+        display: ['Montserrat', 'ui-sans-serif', 'system-ui'],
+        montserrat: ['Montserrat', 'ui-sans-serif', 'system-ui'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',

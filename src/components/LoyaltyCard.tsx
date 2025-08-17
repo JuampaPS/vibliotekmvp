@@ -56,12 +56,12 @@ const LoyaltyCard = ({}: LoyaltyCardProps) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="w-full max-w-md mx-auto p-6"
+      className="w-full max-w-md mx-auto p-6 bg-black text-white"
     >
       {/* Header */}
       <div className="text-center mb-6">
-        <h1 className="text-3xl font-display font-bold text-black mb-2">Stämpelkort</h1>
-        <p className="text-gray-600">Samla lunchstämplar och få en gratis lunch!</p>
+        <h1 className="text-3xl font-display font-bold text-white mb-2">Stämpelkort</h1>
+        <p className="text-white font-montserrat">Samla lunchstämplar och få en gratis lunch!</p>
       </div>
 
       {/* User Status Block */}
@@ -111,7 +111,7 @@ const LoyaltyCard = ({}: LoyaltyCardProps) => {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="bg-white border-2 border-black rounded-2xl p-6 mb-6 shadow-lg"
       >
-        <h3 className="text-xl font-bold text-black mb-4 text-center">Ditt Stämpelkort</h3>
+        <h3 className="text-xl font-bold text-black mb-4 text-center font-montserrat">Ditt Stämpelkort</h3>
         
         {/* Stamp Grid */}
         <div className="grid grid-cols-5 gap-4 mb-6">
@@ -148,7 +148,7 @@ const LoyaltyCard = ({}: LoyaltyCardProps) => {
 
         {/* Description */}
         <div className="text-center mb-4">
-          <p className="text-gray-700 leading-relaxed">
+          <p className="text-gray-700 leading-relaxed font-montserrat">
             Ät 10 luncher och få en valfri Lunch utan kostnad.
           </p>
         </div>
