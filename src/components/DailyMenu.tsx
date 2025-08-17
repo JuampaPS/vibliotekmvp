@@ -269,23 +269,32 @@ const DailyMenu = ({ activeTab }: { activeTab: string }) => {
 
       {/* Includes section with price */}
       <div className="bg-red-600 border border-red-700 rounded-lg p-2 mb-8">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+        <div className="flex flex-col">
+          {/* Includes label */}
+          <div className="text-left mb-2">
             <span className="text-sm font-semibold text-white font-montserrat">Includes:</span>
-            <div className="flex items-center space-x-3">
-              <Leaf className="w-4 h-4 text-white" />
-              <span className="text-xs text-white font-montserrat">Salad</span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <Circle className="w-4 h-4 text-white" />
-              <span className="text-xs text-white font-montserrat">Bread</span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <Coffee className="w-4 h-4 text-white" />
-              <span className="text-xs text-white font-montserrat">Coffee</span>
-            </div>
           </div>
-          <span className="text-2xl font-bold text-white font-montserrat">{currentDayMenu.price} kr</span>
+          
+          {/* Items and price in one line */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <Leaf className="w-4 h-4 text-white" />
+                <span className="text-xs text-white font-montserrat">Salad</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Circle className="w-4 h-4 text-white" />
+                <span className="text-xs text-white font-montserrat">Bread</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Coffee className="w-4 h-4 text-white" />
+                <span className="text-xs text-white font-montserrat">Coffee</span>
+              </div>
+            </div>
+            
+            {/* Price */}
+            <span className="text-3xl font-bold text-white font-montserrat flex items-center">{currentDayMenu.price} kr</span>
+          </div>
         </div>
       </div>
         
