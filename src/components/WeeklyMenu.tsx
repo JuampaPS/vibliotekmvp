@@ -18,42 +18,42 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
       name: 'Grillad pluma och zucchini',
       description: 'Serverad med hummus på vita bönnor, potatis och pinjenötter',
       price: '135 KR',
-      image: '/images/monday.jpg'
+      image: '/images/mondayvideo.mp4'
     },
     {
       day: 'TISDAG',
       name: 'Grillad majskycklingbröst',
       description: 'Serverad med rostade morötter, rödlök och tomater. Serveras med aioli',
       price: '135 KR',
-      image: '/images/tuesday.jpg'
+      image: '/images/tuesdayvideo.mp4'
     },
     {
       day: 'ONSDAG',
       name: 'Långkok kamben med BBQ-sås',
       description: 'Serverad med coleslaw och patatas bravas',
       price: '135 KR',
-      image: '/images/wednesday.webp'
+      image: '/images/wednesdayvideo.mp4'
     },
     {
       day: 'TORSDAG',
       name: 'Hel rostad vårkyckling',
       description: 'Serveras med majrova och tomatsallad, potatis och aioli',
       price: '135 KR',
-      image: '/images/thursday.webp'
+      image: '/images/thursdayvideo.mp4'
     },
     {
       day: 'FREDAG',
       name: 'Grillad beef petite',
       description: 'Serveras med rödvinssås, potatisstomp, hel rostad spetskål och morötter. Toppad med chimichurri',
       price: '149 KR',
-      image: '/images/friday.jpg'
+      image: '/images/fridayvideo.mp4'
     },
     {
       day: 'VEGETARISK',
       name: 'Grillad aubergine, zucchini och paprika',
       description: 'Serveras med potatis, hummus på vita bönnor, manchego ost och pinjenötter',
       price: '135 KR',
-      image: '/images/vegetarisk.jpg'
+      image: '/images/veggivideo.mp4'
     }
   ];
 
@@ -62,13 +62,13 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
       name: 'PEPITO DE TERNERA',
       description: 'En klassisk biffmacka med Pedro Ximenez karamelliserad lök, piquillopeppar och rucola. Serverad med padrones och patatas bravas',
       price: '149 KR',
-      image: '/images/pepitoternera.webp'
+      image: '/images/pepitoterneranew.jpeg'
     },
     {
       name: 'BOCATA DE CALAMARES',
       description: 'Blackfiskmacka med aioli, picklad selleri och rucola. Serverad med padrones och patatas bravas',
       price: '149 KR',
-      image: '/images/bocatacalamares.jpg'
+      image: '/images/bocadillo-de-calamares.jpg'
     },
     {
       name: 'BOCATA DE TORTILLA',
@@ -171,12 +171,12 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="bg-white border-2 border-black rounded-lg p-6 mb-6"
+        className="bg-black border-2 border-red-600 rounded-lg p-3 mb-4"
       >
-        <h2 className="text-xl font-bold text-black mb-4 text-center font-montserrat">
+        <h2 className="text-lg font-bold text-white mb-2 text-center font-montserrat">
           DAGENS LUNCH – 135 KR
         </h2>
-        <p className="text-sm text-gray-600 text-center mb-6 font-montserrat">
+        <p className="text-xs text-white text-center mb-3 font-montserrat">
           Sallad, bröd & kaffe ingår alltid
         </p>
 
@@ -201,32 +201,45 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
               <span className="font-bold text-sm">{weeklyDishes[currentSlide].day}</span>
             </div>
 
-            {/* Dish Image */}
-            <div className="mb-4 -mx-6">
-              <Image
-                src={weeklyDishes[currentSlide].image}
-                alt={weeklyDishes[currentSlide].name}
-                width={300}
-                height={200}
-                className="w-screen h-64 object-cover"
-                priority
-              />
+            {/* Dish Media */}
+            <div className="mb-3 -mx-6">
+              {weeklyDishes[currentSlide].image.endsWith('.mp4') ? (
+                <video
+                  src={weeklyDishes[currentSlide].image}
+                  className="w-screen h-96 object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  controls={false}
+                  onMouseEnter={(e) => (e.currentTarget.controls = false)}
+                  onTouchStart={(e) => (e.currentTarget.controls = false)}
+                >
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <Image
+                  src={weeklyDishes[currentSlide].image}
+                  alt={weeklyDishes[currentSlide].name}
+                  width={300}
+                  height={200}
+                  className="w-screen h-96 object-cover"
+                  priority
+                />
+              )}
             </div>
 
             {/* Dish Name */}
-            <h3 className="font-bold text-black text-lg mb-2 font-montserrat">
+            <h3 className="font-bold text-white text-base mb-1 font-montserrat">
               {weeklyDishes[currentSlide].name}
             </h3>
 
             {/* Dish Description */}
-            <p className="text-sm text-gray-700 leading-relaxed mb-3 font-montserrat">
+            <p className="text-xs text-white leading-snug mb-2 font-montserrat">
               {weeklyDishes[currentSlide].description}
             </p>
 
-            {/* Price */}
-            <div className="text-2xl font-bold text-red-600">
-              {weeklyDishes[currentSlide].price}
-            </div>
+
           </motion.div>
 
 
@@ -251,9 +264,9 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="bg-white border-2 border-black rounded-lg p-6 mb-6"
+        className="bg-black border-2 border-red-600 rounded-lg p-3 mb-4"
       >
-        <h2 className="text-xl font-bold text-black mb-4 text-center font-montserrat">
+        <h2 className="text-lg font-bold text-white mb-2 text-center font-montserrat">
           ALWAYS AT VIBLIOTEK – 149 KR
         </h2>
 
@@ -273,32 +286,45 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
             transition={{ duration: 0.3 }}
             className="text-center"
           >
-            {/* Dish Image */}
-            <div className="mb-4 -mx-6">
-              <Image
-                src={alwaysAvailable[currentAlwaysSlide].image}
-                alt={alwaysAvailable[currentAlwaysSlide].name}
-                width={300}
-                height={200}
-                className="w-screen h-64 object-cover"
-                priority
-              />
+            {/* Dish Media */}
+            <div className="mb-3 -mx-6">
+              {alwaysAvailable[currentAlwaysSlide].image.endsWith('.mp4') ? (
+                <video
+                  src={alwaysAvailable[currentAlwaysSlide].image}
+                  className="w-screen h-96 object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  controls={false}
+                  onMouseEnter={(e) => (e.currentTarget.controls = false)}
+                  onTouchStart={(e) => (e.currentTarget.controls = false)}
+                >
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <Image
+                  src={alwaysAvailable[currentAlwaysSlide].image}
+                  alt={alwaysAvailable[currentAlwaysSlide].name}
+                  width={300}
+                  height={200}
+                  className="w-screen h-96 object-cover"
+                  priority
+                />
+              )}
             </div>
 
             {/* Dish Name */}
-            <h3 className="font-bold text-black text-lg mb-2 font-montserrat">
+            <h3 className="font-bold text-white text-base mb-1 font-montserrat">
               {alwaysAvailable[currentAlwaysSlide].name}
             </h3>
 
             {/* Dish Description */}
-            <p className="text-sm text-gray-700 leading-relaxed mb-3 font-montserrat">
+            <p className="text-xs text-white leading-snug mb-2 font-montserrat">
               {alwaysAvailable[currentAlwaysSlide].description}
             </p>
 
-            {/* Price */}
-            <div className="text-2xl font-bold text-red-600">
-              {alwaysAvailable[currentAlwaysSlide].price}
-            </div>
+
           </motion.div>
 
 

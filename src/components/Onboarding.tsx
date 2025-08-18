@@ -212,7 +212,7 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
               <div className="flex items-center justify-center space-x-3">
                 <Gift className="w-6 h-6 text-red-600" />
                 <span className="text-red-800 font-medium">
-                  Free welcome gift: Choose between free coffee or dessert!
+                  Free welcome gift: You get 20% discount!
                 </span>
               </div>
             </motion.div>
