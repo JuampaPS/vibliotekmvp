@@ -4,7 +4,7 @@ import { trpc } from '../utils/trpc';
 import { Clock, Coffee, Leaf, Circle, Star, Share2 } from 'lucide-react';
 import Image from 'next/image';
 import WeeklyMenu from './WeeklyMenu';
-import OptimizedVideo from './OptimizedVideo';
+import VideoPlayer from './VideoPlayer';
 
 const DailyMenu = ({ activeTab }: { activeTab: string }) => {
   const [showWeeklyMenu, setShowWeeklyMenu] = useState(false);
@@ -206,7 +206,7 @@ const DailyMenu = ({ activeTab }: { activeTab: string }) => {
         className="mb-4 -mx-6"
       >
         {currentDayMenu.image.endsWith('.mp4') ? (
-          <OptimizedVideo
+          <VideoPlayer
             src={currentDayMenu.image}
             alt={`Today's menu: ${currentDayMenu.name}`}
             className="w-screen h-96 object-cover"

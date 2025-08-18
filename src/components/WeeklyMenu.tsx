@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
-import OptimizedVideo from './OptimizedVideo';
+import VideoPlayer from './VideoPlayer';
 
 interface WeeklyMenuProps {
   onBack: () => void;
@@ -205,7 +205,7 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
             {/* Dish Media */}
             <div className="mb-3 -mx-6">
               {weeklyDishes[currentSlide].image.endsWith('.mp4') ? (
-                <OptimizedVideo
+                <VideoPlayer
                   src={weeklyDishes[currentSlide].image}
                   alt={weeklyDishes[currentSlide].name}
                   className="w-screen h-96 object-cover"
@@ -282,7 +282,7 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
             {/* Dish Media */}
             <div className="mb-3 -mx-6">
               {alwaysAvailable[currentAlwaysSlide].image.endsWith('.mp4') ? (
-                <OptimizedVideo
+                <VideoPlayer
                   src={alwaysAvailable[currentAlwaysSlide].image}
                   alt={alwaysAvailable[currentAlwaysSlide].name}
                   className="w-screen h-96 object-cover"

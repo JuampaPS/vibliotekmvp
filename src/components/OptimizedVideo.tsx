@@ -14,7 +14,7 @@ const OptimizedVideo = ({ src, alt, className = "", poster }: OptimizedVideoProp
   return (
     <motion.div
       ref={elementRef}
-      className={className}
+      className="relative w-full"
       initial={{ opacity: 0 }}
       animate={{ opacity: hasIntersected ? 1 : 0 }}
       transition={{ duration: 0.3 }}
@@ -22,7 +22,7 @@ const OptimizedVideo = ({ src, alt, className = "", poster }: OptimizedVideoProp
       {hasIntersected ? (
         <video
           src={src}
-          className={className}
+          className={`w-full h-full object-cover ${className}`}
           autoPlay
           muted
           loop
@@ -32,13 +32,21 @@ const OptimizedVideo = ({ src, alt, className = "", poster }: OptimizedVideoProp
           poster={poster}
           onMouseEnter={(e) => (e.currentTarget.controls = false)}
           onTouchStart={(e) => (e.currentTarget.controls = false)}
+          style={{
+            display: 'block',
+            maxWidth: '100%',
+            height: 'auto'
+          }}
         >
           Your browser does not support the video tag.
         </video>
       ) : (
         <div 
-          className={`${className} bg-gray-200 flex items-center justify-center`}
-          style={{ minHeight: '384px' }}
+          className={`w-full bg-gray-200 flex items-center justify-center ${className}`}
+          style={{ 
+            minHeight: '384px',
+            aspectRatio: '16/9'
+          }}
         >
           <div className="text-center text-gray-500">
             <div className="w-16 h-16 mx-auto mb-2 bg-gray-300 rounded-full flex items-center justify-center">
