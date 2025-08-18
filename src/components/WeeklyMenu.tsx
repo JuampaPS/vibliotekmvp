@@ -39,7 +39,7 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
       name: 'Hel rostad vårkyckling',
       description: 'Serveras med majrova och tomatsallad, potatis och aioli',
       price: '135 KR',
-      image: '/images/thursdayvideo.mp4'
+      image: '/images/thuersdayvideo.mp4'
     },
     {
       day: 'FREDAG',

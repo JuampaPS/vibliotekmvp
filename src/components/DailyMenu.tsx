@@ -42,7 +42,7 @@ const DailyMenu = ({ activeTab }: { activeTab: string }) => {
     thursday: {
       name: "Hel rostad vårkyckling serveras med majrova och tomatsallad, potatis och aioli",
       price: 135,
-      image: "/images/thursdayvideo.mp4"
+      image: "/images/thuersdayvideo.mp4"
     },
     friday: {
       name: "Grillad beef petite serveras med rödvinssås, potatisstomp, hel rostad spetskål och morötter. Toppad med chimichurri",
