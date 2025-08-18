@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
+import OptimizedVideo from './OptimizedVideo';
 
 interface WeeklyMenuProps {
   onBack: () => void;
@@ -204,19 +205,11 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
             {/* Dish Media */}
             <div className="mb-3 -mx-6">
               {weeklyDishes[currentSlide].image.endsWith('.mp4') ? (
-                <video
+                <OptimizedVideo
                   src={weeklyDishes[currentSlide].image}
+                  alt={weeklyDishes[currentSlide].name}
                   className="w-screen h-96 object-cover"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  controls={false}
-                  onMouseEnter={(e) => (e.currentTarget.controls = false)}
-                  onTouchStart={(e) => (e.currentTarget.controls = false)}
-                >
-                  Your browser does not support the video tag.
-                </video>
+                />
               ) : (
                 <Image
                   src={weeklyDishes[currentSlide].image}
@@ -289,19 +282,11 @@ const WeeklyMenu = ({ onBack, showBackButton = true }: WeeklyMenuProps) => {
             {/* Dish Media */}
             <div className="mb-3 -mx-6">
               {alwaysAvailable[currentAlwaysSlide].image.endsWith('.mp4') ? (
-                <video
+                <OptimizedVideo
                   src={alwaysAvailable[currentAlwaysSlide].image}
+                  alt={alwaysAvailable[currentAlwaysSlide].name}
                   className="w-screen h-96 object-cover"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  controls={false}
-                  onMouseEnter={(e) => (e.currentTarget.controls = false)}
-                  onTouchStart={(e) => (e.currentTarget.controls = false)}
-                >
-                  Your browser does not support the video tag.
-                </video>
+                />
               ) : (
                 <Image
                   src={alwaysAvailable[currentAlwaysSlide].image}

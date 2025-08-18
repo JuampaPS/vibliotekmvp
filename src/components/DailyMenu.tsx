@@ -4,6 +4,7 @@ import { trpc } from '../utils/trpc';
 import { Clock, Coffee, Leaf, Circle, Star, Share2 } from 'lucide-react';
 import Image from 'next/image';
 import WeeklyMenu from './WeeklyMenu';
+import OptimizedVideo from './OptimizedVideo';
 
 const DailyMenu = ({ activeTab }: { activeTab: string }) => {
   const [showWeeklyMenu, setShowWeeklyMenu] = useState(false);
@@ -205,19 +206,11 @@ const DailyMenu = ({ activeTab }: { activeTab: string }) => {
         className="mb-4 -mx-6"
       >
         {currentDayMenu.image.endsWith('.mp4') ? (
-          <video
+          <OptimizedVideo
             src={currentDayMenu.image}
+            alt={`Today's menu: ${currentDayMenu.name}`}
             className="w-screen h-96 object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            controls={false}
-            onMouseEnter={(e) => e.currentTarget.controls = false}
-            onTouchStart={(e) => e.currentTarget.controls = false}
-          >
-            Your browser does not support the video tag.
-          </video>
+          />
         ) : (
           <Image
             src={currentDayMenu.image}
